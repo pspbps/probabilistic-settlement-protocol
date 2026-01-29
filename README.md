@@ -83,5 +83,18 @@ Guidelines for referencing and implementing PSP are defined in:
 
 This document clarifies correct and incorrect usage of the PSP name and specification.
 
+---
+
+## Authorship & Governance
+
+PSP is currently maintained as an author-stewarded protocol specification.
+
+There is no foundation or governing entity at this stage.  
+Governance applies only to specification evolution and never affects
+finalized settlements.
+
+Details are defined in [GOVERNANCE.md](./GOVERNANCE.md).
+
+
 
 
