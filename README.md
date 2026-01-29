@@ -63,3 +63,14 @@ Fees are computed deterministically and bound to settlement finalization, not di
 
 This repository contains **only protocol-level documentation and specifications**.
 
+---
+
+## Governance
+
+The governance model and authorship declaration of PSP are defined in:
+
+- [GOVERNANCE.md](./GOVERNANCE.md)
+
+This document defines how the protocol may evolve without affecting finalized settlements.
+
+
