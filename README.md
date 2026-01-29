@@ -73,4 +73,15 @@ The governance model and authorship declaration of PSP are defined in:
 
 This document defines how the protocol may evolve without affecting finalized settlements.
 
+---
+
+## Citation & Usage
+
+Guidelines for referencing and implementing PSP are defined in:
+
+- [CITATION.md](./CITATION.md)
+
+This document clarifies correct and incorrect usage of the PSP name and specification.
+
+
 
