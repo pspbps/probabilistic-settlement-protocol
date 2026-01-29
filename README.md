@@ -1,3 +1,17 @@
+## Canonical Protocol Repository
+
+This repository is the **canonical specification** of the
+**Probabilistic Settlement Protocol (PSP)**.
+
+### Documents
+- 📄 Whitepaper: `whitepaper/PSP_Whitepaper_v1.0.md`
+- 📐 Specification (Draft): `spec/PSP_Spec_v1.1_Draft.md`
+- ✅ Compliance Checklist: `compliance/PSP_Compliance_Checklist_v1.1.md`
+- 🛣 Protocol Roadmap: `ROADMAP.md`
+
+### Reference Implementation
+👉 https://github.com/pspbps/psp-reference-implementation
+
 # Probabilistic Settlement Protocol (PSP)
 
 Probabilistic Settlement Protocol (PSP) is a decentralized protocol specification for verifiable, non-manipulable probabilistic settlement.
