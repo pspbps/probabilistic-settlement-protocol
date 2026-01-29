@@ -66,3 +66,31 @@ Use of the name must not imply:
 This repository defines a protocol specification, not a financial product or service.
 
 Use of the protocol is at the discretion and risk of implementers.
+
+---
+
+## Authorship and Stewardship
+
+The PSP specification is currently maintained by its original author(s).
+
+At this stage:
+- There is no foundation, association, or incorporated entity governing PSP
+- No on-chain governance or token-based voting is assumed
+- Stewardship is limited to specification maintenance and versioning
+
+The authors act as **stewards of the specification**, not as operators of
+any implementation or settlement system.
+
+---
+
+## Future Governance Evolution
+
+The governance model of PSP may evolve over time, including but not limited to:
+- Establishment of a foundation or working group
+- Multi-stakeholder stewardship
+- Formalized proposal and review processes
+
+Any such evolution will be explicitly documented and will not affect:
+- The immutability of finalized settlements
+- The validity of prior protocol versions
+
