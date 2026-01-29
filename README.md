@@ -1,67 +1,65 @@
-## Canonical Protocol Repository
-
-This repository is the **canonical specification** of the
-**Probabilistic Settlement Protocol (PSP)**.
-
-### Documents
-- 📄 Whitepaper: `whitepaper/PSP_Whitepaper_v1.0.md`
-- 📐 Specification (Draft): `spec/PSP_Spec_v1.1_Draft.md`
-- ✅ Compliance Checklist: `compliance/PSP_Compliance_Checklist_v1.1.md`
-- 🛣 Protocol Roadmap: `ROADMAP.md`
-
-### Reference Implementation
-👉 https://github.com/pspbps/psp-reference-implementation
-
 # Probabilistic Settlement Protocol (PSP)
 
-Probabilistic Settlement Protocol (PSP) is a decentralized protocol specification for verifiable, non-manipulable probabilistic settlement.
-
-PSP enables a settlement process where outcomes (such as full payment, zero settlement, or proportional settlement) are determined by deterministic on-chain logic combined with verifiable randomness, while strictly preventing any form of post-hoc manipulation.
+**Status:** Canonical Protocol Specification  
+**Version:** v1.x (Whitepaper v1.0 · Spec v1.1 Draft)  
+**License:** MIT (Specification)
 
 ---
 
-## What PSP Is
+## Overview
 
+The **Probabilistic Settlement Protocol (PSP)** is a decentralized settlement protocol specification for **verifiable, non-manipulable probabilistic settlement**.
+
+PSP defines how a fixed settlement amount can be deterministically resolved into **multiple possible outcomes**, according to predefined probability weights, while remaining:
+
+- Fully on-chain verifiable
+- Deterministically recomputable by third parties
+- Non-manipulable after commitment
+- Compatible with deterministic fee computation
+
+This repository is the **canonical specification repository** of the PSP protocol.
+
+---
+
+## What PSP Is (and Is Not)
+
+### PSP **Is**
 - A **protocol**, not a platform
-- A **settlement-layer primitive**, not an application
-- A **verifiable probability-based settlement standard**
-- Designed to be embedded into e-commerce, financial, and service workflows
+- A **settlement-layer primitive**
+- A **probabilistic settlement standard**
+- Designed to be embedded into:
+  - E-commerce systems
+  - Financial workflows
+  - Service and fulfillment protocols
+
+### PSP **Is Not**
+- An application
+- A UI or frontend product
+- A custody system
+- A gambling or betting protocol
 
 ---
 
 ## Core Properties
 
-- **Commit–Reveal Verifiability**  
-  Settlement inputs are committed before outcome revelation, preventing after-the-fact manipulation.
+### 1. Commit–Reveal Verifiability
+Settlement inputs are committed **before** outcome revelation, preventing after-the-fact manipulation.
 
-- **Deterministic Recomputability**  
-  Any third party can recompute settlement outcomes and protocol fees from public inputs.
+### 2. Deterministic Recomputation
+Any third party can recompute:
+- The resolved outcome
+- The charged protocol fee  
+using only public inputs and on-chain data.
 
-- **Non-Retroactive Governance**  
-  Protocol parameters may evolve only via timelocked governance and never affect finalized settlements.
+### 3. Non-Retroactive Governance
+Protocol parameters may evolve **only via timelocked governance** and never affect finalized settlements.
 
-- **Protocol-Level Fee Model**  
-  Fees are computed deterministically and bound to settlement finalization.
-
----
-
-## Status
-
-- **Version:** v1.0  
-- **Status:** Protocol Definition Release  
-- **Implementation:** Reference Solidity implementation available  
-- **Deployment:** Canonical mainnet deployment pending
+### 4. Protocol-Level Fee Model
+Fees are computed deterministically and bound to settlement finalization, not discretionary execution.
 
 ---
 
-## License & Usage
+## Repository Structure
 
-PSP is an open protocol specification.  
-Implementations may vary, but only canonical deployments are considered PSP-compliant.
+This repository contains **only protocol-level documentation and specifications**.
 
----
-
-## Disclaimer
-
-This repository defines a protocol specification and reference implementation.  
-It does not constitute financial advice or a consumer-facing application.
