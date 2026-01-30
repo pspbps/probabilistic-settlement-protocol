@@ -184,3 +184,52 @@ In this mode:
 
 This mode provides the strongest guarantees but requires
 greater engineering effort.
+
+---
+
+## 6. Common Misunderstandings
+
+This section addresses common misconceptions about PSP.
+
+### PSP Is Not Gambling
+
+PSP does not introduce speculative behavior, wagering, or betting.
+It defines how settlement outcomes are resolved when variability
+is intentionally designed into a transaction.
+
+PSP does not promise gains, rewards, or expected value.
+
+---
+
+### PSP Is Not a Platform
+
+PSP does not provide:
+- Marketplaces
+- User interfaces
+- Asset custody
+- Business logic
+
+It is a protocol-level settlement primitive.
+
+---
+
+### PSP Does Not Guarantee Outcomes
+
+PSP guarantees:
+- Correct execution of predefined rules
+- Verifiability of outcomes
+
+It does not guarantee:
+- User profit
+- Merchant revenue
+- Business success
+
+---
+
+### PSP Does Not Require Full On-Chain Deployment
+
+PSP can be integrated in both:
+- Partially off-chain systems
+- Fully on-chain protocols
+
+The protocol defines settlement semantics, not deployment mandates.
