@@ -120,3 +120,26 @@ Examples include:
 
 PSP ensures that settlement follows predefined rules and that outcomes
 cannot be altered after the fact.
+
+---
+
+## 4. What PSP Does NOT Handle
+
+PSP is intentionally limited in scope.
+
+The protocol does **not** attempt to handle concerns that are
+application-specific, operational, or off-chain by nature.
+
+Specifically, PSP does not manage:
+
+- Product quality or service fulfillment
+- Logistics, shipping, or delivery confirmation
+- Refund processing or dispute mediation
+- User interface or user experience
+- Regulatory compliance or jurisdiction-specific rules
+- Customer support or post-settlement communication
+
+These concerns must be addressed by the integrating system.
+
+PSP provides a **verifiable settlement outcome**, not an end-to-end
+transaction lifecycle.
