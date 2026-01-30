@@ -143,3 +143,44 @@ These concerns must be addressed by the integrating system.
 
 PSP provides a **verifiable settlement outcome**, not an end-to-end
 transaction lifecycle.
+
+---
+
+## 5. Integration Modes
+
+PSP is designed to support multiple integration modes depending on
+the requirements and maturity of the integrating system.
+
+### 5.1 Light Integration
+
+Light integration is suitable for systems that:
+
+- Already manage payments and fulfillment off-chain
+- Require verifiable settlement logic without full on-chain execution
+- Prefer minimal engineering overhead
+
+In this mode:
+- PSP rules are referenced as a settlement specification
+- Commitment and outcome verification may be performed by a trusted executor
+- Settlement proofs can be published or audited post hoc
+
+This mode lowers the barrier to adoption while preserving
+the core verifiability guarantees of PSP.
+
+---
+
+### 5.2 Full Integration
+
+Full integration is suitable for systems that:
+
+- Require maximal trust minimization
+- Execute settlement logic fully on-chain
+- Integrate PSP directly into smart contracts or protocols
+
+In this mode:
+- Commit–reveal flows are executed on-chain
+- Settlement outcomes are finalized by protocol logic
+- Fees and outcomes are deterministically enforced
+
+This mode provides the strongest guarantees but requires
+greater engineering effort.
