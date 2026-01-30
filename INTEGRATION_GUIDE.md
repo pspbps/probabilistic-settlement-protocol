@@ -66,3 +66,57 @@ PSP does **not** manage:
 PSP should be treated as a **pure settlement primitive**, similar to
 how cryptographic hash functions or signature schemes are used as primitives
 within larger systems.
+
+---
+
+## 3. Example Scenarios
+
+This section illustrates how PSP may be applied in real-world systems.
+
+### 3.1 E-commerce Probabilistic Settlement
+
+In some e-commerce scenarios, the final settlement amount of an order
+may intentionally vary according to predefined rules.
+
+Examples include:
+- Orders with a predefined probability of reduced settlement
+- Promotional mechanisms where some transactions settle at zero cost
+- Variable final charges determined at settlement time
+
+Using PSP, the settlement outcome is:
+- Predefined and transparent
+- Verifiable by both merchant and buyer
+- Non-manipulable after commitment
+
+The merchant does not control individual outcomes, and the buyer does not
+need to trust the merchant’s internal logic.
+
+---
+
+### 3.2 Discount and Cashback Programs
+
+Traditional discount or cashback programs rely on centralized execution
+and opaque logic.
+
+PSP enables such programs to be expressed as settlement rules, where:
+- Discounts are resolved probabilistically
+- Cashback amounts are deterministically computed
+- All outcomes can be independently verified
+
+This reduces disputes and increases user trust without introducing
+custodial or platform-level complexity.
+
+---
+
+### 3.3 Service-Level Guarantees
+
+PSP may be used in service agreements where compensation depends on
+probabilistic or conditional outcomes.
+
+Examples include:
+- Service credits triggered by predefined conditions
+- Partial refunds resolved at settlement time
+- Compensation rules that must be trusted by both parties
+
+PSP ensures that settlement follows predefined rules and that outcomes
+cannot be altered after the fact.
