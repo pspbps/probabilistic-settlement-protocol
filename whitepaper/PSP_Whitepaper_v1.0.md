@@ -1,11 +1,11 @@
 # Probabilistic Settlement Protocol (PSP)
-## Whitepaper v1.0
+## Whitepaper v1.0.1
 
 ---
 
 ## Version & Scope Declaration
 
-This document defines **Probabilistic Settlement Protocol (PSP) v1.0**.
+This document defines **Probabilistic Settlement Protocol (PSP) v1.x**.
 
 This whitepaper is a **protocol-level specification**, not a business offering,
 financial product, or application-layer implementation.
@@ -16,14 +16,16 @@ PSP defines:
 
 - Deterministic and verifiable probabilistic settlement rules
 - Commit–reveal based randomness verification
-- Protocol-level fee computation and non-retroactive governance constraints
+- Protocol-level fee computation
+- Non-retroactive governance constraints
 
 PSP does **not** define:
 
-- User interfaces
-- Business logic
-- Merchant policies
-- Compliance, custody, or consumer protection mechanisms
+- User interfaces or frontends
+- Business logic or merchant policies
+- Asset custody or fund transfers
+- Compliance, consumer protection, or dispute resolution
+- Application-specific workflows
 
 Any application, platform, or service integrating PSP is solely responsible
 for its own legal, regulatory, and operational compliance.
@@ -40,18 +42,21 @@ it must not be altered retroactively by governance, operators, or integrators.
 
 ---
 
-# Probabilistic Settlement Protocol (PSP)
-Version 1.0
-
----
-
 ## Abstract
 
-The Probabilistic Settlement Protocol (PSP) is a decentralized protocol specification for **verifiable, non-manipulable probabilistic settlement**.
+The **Probabilistic Settlement Protocol (PSP)** is a decentralized protocol
+specification for **verifiable, non-manipulable probabilistic settlement**.
 
-PSP defines a deterministic, on-chain settlement primitive where the final settlement amount is selected from a predefined outcome distribution, using publicly verifiable randomness derived via commit–reveal mechanisms. Once finalized, settlement results are immutable and recomputable by any third party.
+PSP defines a deterministic settlement primitive where the final settlement
+outcome is selected from a predefined distribution using publicly verifiable
+randomness derived via commit–reveal mechanisms.
 
-PSP is designed as a **protocol-level settlement primitive**, not an application, enabling integration across e-commerce, financial services, and digital marketplaces.
+Once finalized, settlement results are immutable and recomputable by any
+third party.
+
+PSP is designed as a **settlement-layer primitive**, not an application,
+and is intended to be embedded into diverse systems including digital
+commerce, financial workflows, and service settlement processes.
 
 ---
 
@@ -59,18 +64,19 @@ PSP is designed as a **protocol-level settlement primitive**, not an application
 
 PSP is:
 
-- A **protocol**, not a platform  
-- A **settlement-layer primitive**, not a product  
-- A **verifiable probabilistic settlement standard**  
-- Designed to be embedded into external systems  
+- A **protocol**, not a platform
+- A **settlement-layer primitive**, not a product
+- A **verifiable probabilistic settlement standard**
+- Designed to be embedded into external systems
 
 PSP does **not** define:
+
 - User interfaces
 - Business logic
 - Asset custody
 - Application-specific workflows
 
-It defines **how settlement outcomes are selected and finalized**.
+PSP defines **how settlement outcomes are selected, finalized, and verified**.
 
 ---
 
@@ -79,15 +85,17 @@ It defines **how settlement outcomes are selected and finalized**.
 ### 2.1 Deterministic Recomputability
 
 Given the same public inputs:
+
 - Rule definition
 - Committed randomness
-- Settlement amount
+- Declared settlement amount
 - Protocol parameters
 
-Any observer can recompute:
+Any observer can deterministically recompute:
+
 - Outcome index
-- Final settlement amount
-- Protocol fee
+- Final settlement metadata
+- Protocol fee obligation
 
 No trusted party is required.
 
@@ -102,6 +110,7 @@ Settlement randomness follows a commit–reveal flow:
 3. The revealed data must match the prior commitment
 
 This prevents:
+
 - After-the-fact manipulation
 - Selective outcome bias
 - Hidden randomness sources
@@ -111,6 +120,7 @@ This prevents:
 ### 2.3 Non-Retroactive Finality
 
 Once a settlement is finalized:
+
 - Outcomes cannot be changed
 - Fees cannot be recalculated
 - Rules cannot be retroactively modified
@@ -124,11 +134,13 @@ Protocol evolution is allowed **only for future settlements**.
 ### 2.4 Minimal Trust Assumptions
 
 PSP assumes:
+
 - Public blockchain execution
 - Transparent contract code
-- No off-chain trust
+- Publicly verifiable data availability
 
 PSP explicitly avoids reliance on:
+
 - Trusted oracles
 - Proprietary randomness providers
 - Off-chain adjudication
@@ -142,6 +154,7 @@ PSP explicitly avoids reliance on:
 A **Rule** defines a settlement distribution consisting of multiple **Outcomes**.
 
 Each Outcome includes:
+
 - A settlement behavior identifier
 - A probability weight (basis points)
 - A parameter field interpreted externally
@@ -153,59 +166,74 @@ All outcome weights must sum to **10,000 bps**.
 ### 3.2 Outcome Selection
 
 Given:
+
 - A finalized random value
 - A rule's outcome distribution
 
-The protocol deterministically maps the random value to a single outcome index using cumulative probability traversal.
+The protocol deterministically maps the random value
+to a single outcome index using cumulative probability traversal.
 
 This process is:
+
 - Deterministic
 - Recomputable
 - Non-interactive
 
 ---
 
-### 3.3 Settlement Amount Binding
+### 3.3 Amount Binding and Outputs
 
-Settlement computation binds:
+Settlement finalization binds:
+
 - Declared settlement amount
 - Selected outcome index
 - Protocol fee parameters
 
-The protocol does **not** transfer assets.  
-It outputs **verifiable settlement metadata**.
+PSP does **not** transfer assets.
+
+PSP outputs **verifiable settlement metadata**
+that external systems may use to execute settlement
+within their own execution context.
 
 ---
 
 ## 4. Randomness Model
 
-### 4.1 Why Commit–Reveal Instead of VRF
+### 4.1 Commit–Reveal Rationale
 
-PSP intentionally uses commit–reveal rather than external VRF systems.
+PSP intentionally adopts a **commit–reveal** mechanism
+as its default randomness model.
 
-Rationale:
+This choice is motivated by:
+
 - No dependency on third-party oracle networks
 - Deterministic replay without oracle availability
-- Lower systemic risk and surface area
-- Suitable for protocol-layer primitives
+- Reduced systemic and governance risk
+- Suitability for protocol-layer primitives
 
-Commit–reveal is sufficient because:
-- The commitment is immutable
-- The reveal is publicly verifiable
-- Manipulation is detectable and rejectable
+Commit–reveal ensures:
+
+- Commitments are immutable
+- Reveals are publicly verifiable
+- Manipulation attempts are detectable
+
+PSP prioritizes **verifiability and auditability**
+over perfect entropy.
 
 ---
 
 ### 4.2 Trust Properties
 
 Commit–reveal provides:
+
 - **Unpredictability before reveal**
 - **Verifiability after reveal**
-- **Non-repudiation**
+- **Non-repudiation of committed inputs**
 
-It does not attempt to provide:
+It does not attempt to guarantee:
+
 - Perfect cryptographic randomness
-- Entropy guarantees beyond adversarial detectability
+- Entropy beyond adversarial detectability
 
 This tradeoff is intentional.
 
@@ -213,328 +241,130 @@ This tradeoff is intentional.
 
 ## 5. Fee Model
 
-### 5.1 Protocol-Level Fees
+### 5.1 Protocol-Level Fee Principle
 
-PSP defines protocol fees as:
-- A fixed basis-point rate
-- Subject to a hard fee cap
-- Charged deterministically at settlement finalization
+PSP defines a protocol-level fee that is:
 
-Fees are computed from:
-- Settlement amount
-- Current fee parameters
+- Deterministically computable
+- Bound to settlement finalization
+- Independent of asset transfer execution
 
----
+The protocol does not charge for:
 
-### 5.2 Fee Governance
+- Randomness generation
+- Probability evaluation
+- Rule definition
 
-Fee parameters may be updated only via:
-- Explicit proposal
-- Enforced timelock delay
-- Non-retroactive application
-
-Past settlements are never affected.
+Fees are assessed **only when a settlement outcome is finalized**.
 
 ---
-## Protocol Fee Model
 
-The Probabilistic Settlement Protocol (PSP) defines a protocol-level fee
-mechanism that is deterministically bound to settlement finalization.
+### 5.2 Deterministic Fee Computation
 
-PSP does not charge for randomness generation or probability evaluation.
-Instead, fees are assessed only when a settlement outcome is finalized
-and verifiable on-chain.
-
-## Fee Flow and Settlement Responsibility
-
-PSP separates fee computation from asset execution.
-
-During settlement finalization, the protocol deterministically computes
-a protocol fee (`feeCharged`) based on the declared settlement amount and
-current fee parameters.
-
-This fee amount is:
-- Bound to a specific invocation
-- Publicly recorded on-chain
-- Independently verifiable by any third party
-
-The protocol does not enforce asset transfers. Instead, it establishes
-an authoritative fee obligation that integrators are responsible for
-settling within their execution context.
-
-This separation ensures:
-- Protocol neutrality across applications
-- Verifiable fee enforcement
-- Independence from frontends or custodial systems
-
-Any application that utilizes PSP settlement logic implicitly accepts
-the protocol-defined fee obligation as part of its settlement process.
-
-
-### Fee Recipient and Governance
-
-Each PSP deployment specifies a `feeRecipient` address, representing the
-beneficiary of protocol-level fees.
-
-In the initial deployment phase, the fee recipient is controlled by the
-protocol maintainer and is subject to explicit governance constraints.
-
-## Canonical Deployment and Protocol Identity
-
-The Probabilistic Settlement Protocol (PSP) distinguishes between
-independent implementations and canonical protocol deployments.
-
-### Canonical Specification
-
-The authoritative definition of PSP is provided by:
-- The PSP Whitepaper v1.0
-- Published specification drafts and compliance documents
-
-Any implementation claiming PSP compatibility must adhere to these
-documents.
-
-
-### Canonical Reference Implementation
-
-The PSP maintainers provide a reference implementation for educational
-and testing purposes. This reference code is non-production and does not
-constitute a canonical deployment.
-
-The canonical deployment of PSP is expected to occur on an EVM-compatible
-Layer 2 network, following a testnet-first deployment strategy.
-
-### Canonical Deployment
-
-A canonical PSP deployment refers to an on-chain deployment that is
-explicitly designated by the protocol maintainers as canonical.
-
-Canonical deployments are expected to:
-- Adhere strictly to the published specification
-- Define an official fee recipient
-- Publish immutable deployment metadata
-- Serve as the default reference for tooling and integrations
-
-The initial canonical deployment is expected to occur on an EVM-compatible
-network, following a testnet-first approach prior to mainnet release.
-
-Independent deployments may exist and operate freely but are not
-considered canonical unless explicitly designated.
-
-### Governance Constraints
-
-All protocol fee parameters, including:
-- fee rate (`feeBps`)
-- maximum fee cap (`feeCap`)
-- fee recipient address
-
-are governed by a timelocked update mechanism.
-
-Any proposed update must be announced on-chain and is subject to a
-minimum delay period before becoming effective.
-
-This design ensures:
-- Non-retroactive fee enforcement
-- Predictability for integrators
-- Sufficient reaction time for users and applications
-
-### Upgrade Path
-
-The governance model is intentionally minimal in early stages and may
-evolve toward multi-signature or decentralized governance mechanisms in
-future protocol versions, without affecting finalized settlements.
-
-## Canonical Governance and Upgrade Guarantees
-
-The canonical deployment of PSP defines explicit boundaries between
-governance authority and finalized settlement outcomes.
-
-### Fee Governance
-
-Protocol fee parameters, including:
-- fee rate (`feeBps`)
-- maximum fee cap (`feeCap`)
-- fee recipient address (`feeRecipient`)
-
-are subject to a timelocked governance mechanism.
-
-All updates must be announced on-chain and are subject to a minimum delay
-period before becoming effective.
-
-### Non-Retroactive Guarantee
-
-No governance action may retroactively alter:
-- Finalized settlement outcomes
-- Previously computed protocol fees
-- Historical invocation data
-
-This guarantee ensures that all commitments made at settlement time
-remain immutable and verifiable.
-
-### Upgrade Scope
-
-Protocol governance may evolve forward through:
-- Additional modules
-- Extended settlement logic
-- Alternative randomness sources
-
-Such upgrades must preserve the non-retroactive guarantees of prior
-protocol versions.
-
-PSP explicitly disallows any form of post-hoc modification of user-facing
-settlement commitments.
-
-
-### Fee Calculation
-
-For each finalized invocation, the protocol computes a protocol fee
-based on the declared settlement amount:
-
-feeCharged = min(amount × feeBps / 10,000, feeCap)
+For each finalized invocation, the protocol computes a fee obligation:
+feeCharged = min(amount * feeBps / 10,000, feeCap)
 
 Where:
-- `amount` is the declared settlement amount provided by the invocation
+
+- `amount` is the declared settlement amount
 - `feeBps` is the protocol fee rate in basis points
-- `feeCap` is the maximum fee limit per invocation
+- `feeCap` is the maximum fee per invocation
 
-Both `feeBps` and `feeCap` are protocol parameters subject to governance
-constraints and timelocked updates.
+All parameters are public and apply **only to future settlements**.
 
-### Deterministic Verifiability
+---
 
-The protocol fee is:
+### 5.3 Fee Responsibility Separation
+
+PSP separates:
+
+- **Fee computation** (protocol responsibility)
+- **Fee settlement** (integrator responsibility)
+
+The protocol does **not** enforce asset transfers.
+Custody, escrow, and payment execution are explicitly out of scope.
+
+---
+
+### 5.4 Verifiability and Non-Retroactivity
+
+The computed fee is:
+
+- Public
 - Deterministic
-- Publicly recomputable
-- Bound to a specific settlement outcome
+- Bound to a specific invocation
 
-Any third party can independently recompute the charged fee using
-on-chain data, ensuring transparency and non-manipulability.
+No governance action may retroactively alter:
 
-### Fee Recipient
+- Finalized settlement outcomes
+- Previously computed fees
 
-Each PSP deployment specifies a `feeRecipient` address, representing
-the beneficiary of protocol-level fees.
-
-The protocol itself does not enforce asset transfer semantics. Instead,
-it provides an authoritative, on-chain computation of the fee obligation,
-allowing integrators to settle fees according to their execution context.
-
-### Non-Retroactive Guarantee
-
-Protocol fee parameters apply only to invocations finalized after the
-effective update time. No finalized settlement may be retroactively
-affected by parameter changes.
+---
 
 ## 6. Governance and Upgradability
 
-### 6.1 Parameter Evolution
+PSP governance applies **only to future protocol behavior**.
 
-The protocol allows:
-- Fee rate updates
-- Fee cap updates
-- Fee recipient updates
+It may evolve through:
 
-Only for future settlements.
+- Parameter updates
+- Interface extensions
+- Modular execution components
 
----
-
-### 6.2 What Cannot Be Changed
-
-The protocol **explicitly forbids**:
-- Recomputing finalized outcomes
-- Altering historical settlement results
-- Reinterpreting committed randomness
+It must never explain or modify finalized settlements.
 
 ---
 
 ## 7. Integration Model
 
-PSP is designed to be integrated by:
-- Payment processors
-- Marketplaces
-- Financial applications
-- Digital commerce systems
+PSP is intended to be embedded by external systems.
 
-Integrators are responsible for:
+PSP provides **settlement correctness guarantees**, not business logic,
+randomized promotions, or application workflows.
+
+Integrators remain responsible for:
+
 - Asset custody
-- User interaction
 - Business logic
-
-PSP provides:
-- Verifiable settlement outcomes
-- Deterministic fee computation
-- Public auditability
+- User interaction
+- Regulatory compliance
 
 ---
 
 ## 8. Security Considerations
 
-### 8.1 Threat Model
-
 PSP defends against:
+
 - After-the-fact manipulation
 - Selective outcome bias
 - Hidden settlement logic
 
-It does not defend against:
-- Incorrect integrator usage
-- Malicious front-end behavior
+PSP does not defend against:
+
+- Malicious frontends
+- Incorrect integration
 - Off-chain fraud
-
----
-
-## Protocol Attribution and Badge Usage
-
-Implementations that utilize the Probabilistic Settlement Protocol (PSP)
-may optionally declare protocol usage through attribution or badge display.
-
-Such attribution indicates that settlement outcomes are:
-- Deterministically recomputable
-- Derived from verifiable pre-commitment
-- Governed by published PSP specifications
-
-### Attribution Guidelines
-
-Attribution or badge usage must:
-- Reference the PSP Whitepaper and specification
-- Not imply endorsement beyond protocol compliance
-- Accurately reflect the implemented PSP version
-
-The PSP protocol does not mandate attribution. However, public declaration
-of PSP usage provides transparency and verifiability benefits to users
-and integrators.
-
-### Canonical Reference
-
-The authoritative specification and reference implementation are maintained
-by the protocol authors and published through official repositories.
-
-
-### 8.2 Transparency Guarantees
-
-All settlement-critical inputs are:
-- Public
-- On-chain
-- Deterministically interpretable
 
 ---
 
 ## 9. Conclusion
 
-PSP defines a new class of decentralized settlement primitive:
+The Probabilistic Settlement Protocol (PSP) defines
+a new class of decentralized settlement primitive that is:
+
 - Probabilistic
 - Verifiable
 - Non-manipulable
 - Deterministically auditable
 
-It is not an application.
-It is not a business model.
+PSP is not an application.  
+PSP is not a business model.  
 
-It is a **settlement rule protocol**.
+PSP is a **settlement rule protocol**.
 
 ---
 
 **End of Document**  
 Probabilistic Settlement Protocol (PSP)  
-Version 1.0
-
+Whitepaper v1.0.1
 
